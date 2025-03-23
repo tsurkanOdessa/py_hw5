@@ -23,8 +23,12 @@ def index():
     for category in categories:
         print(f"Category: {category.name}, Description: {category.description}")
 
+    print_separator()
+
     for query in queries:
         print(f"Query: {query.text}, Category: {query.category.name}")
+
+    print_separator()
 
     for product in products:
         print(
@@ -60,6 +64,10 @@ def add_data():
     db.session.commit()
 
     return 'Все данные успешно добавлены'
+
+def print_separator():
+    separator = '_' * 80
+    print(separator)
 
 
 if __name__ == '__main__':
