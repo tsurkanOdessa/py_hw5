@@ -18,14 +18,19 @@ def index():
 
     categories = Category.query.all()
     queries = Queries.query.all()
+    products = Product.query.all()
 
     for category in categories:
         print(f"Category: {category.name}, Description: {category.description}")
 
     for query in queries:
-        print(f"Question: {query.text}, Category: {query.category.name}")
+        print(f"Query: {query.text}, Category: {query.category.name}")
 
-    return 'Check the console for data'
+    for product in products:
+        print(
+            f"Product: {product.name}, Price: {product.price}, In Stock: {product.in_stock}, Category: {product.category.name}")
+
+    return 'Перейдите в консоль что бы проверить данные'
 
 
 @app.route('/add_data')
@@ -45,7 +50,16 @@ def add_data():
     db.session.add_all([query1, query2])
     db.session.commit()
 
-    return 'Data added successfully!'
+    product_smartphone = Product(name="Смартфон", price=299.99, in_stock=True, category_id=category_electronics.id)
+    product_laptop = Product(name="Ноутбук", price=499.99, in_stock=True, category_id=category_electronics.id)
+    product_book = Product(name="Научно-фантастический роман", price=15.99, in_stock=True, category_id=category_books.id)
+    product_jeans = Product(name="Джинсы", price=40.50, in_stock=True, category_id=category_clothing.id)
+    product_tshirt = Product(name="Футболка", price=20.00, in_stock=True, category_id=category_clothing.id)
+
+    db.session.add_all([product_smartphone, product_laptop, product_book, product_jeans, product_tshirt])
+    db.session.commit()
+
+    return 'Все данные успешно добавлены'
 
 
 if __name__ == '__main__':
